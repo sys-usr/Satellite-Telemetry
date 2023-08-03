@@ -21,7 +21,20 @@ The Satellite Telemetry Analyzer is a Python application designed to process, vi
    - [Scaled Data Visualization](#scaled-data-visualization)
 4. [Background](#background)
    - [Important definitions](#important-definitions)
+      - [Telemetry](#telemetry)
+      - [Bus](#bus)
+      - [Reaction Wheel](#reaction-wheel)
+   - [Implications](#implications)
+5. [Hypothesis](#hypothesis)
+   - [Null Hypothesis](#null-hypothesis)
+   - [Alternate Hypothesis](#alternate-hypothesis)
+6. [Data Cleaning](#data-cleaning)
+7. [Visualizations](#visualizations)
+8. [Conclusion](#conclusion)
+   - [What this means for telemetry analysis](#what-this-means-for-telemetry-analysis)
    
+
+
 ## Requirements
 
 The following Python libraries are required to run the code:
@@ -107,7 +120,3 @@ The `plot_roc_curve` function calculates and plots the Receiver Operating Charac
 The `visualize_scaled_data` function scales numeric columns and plots a time series, along with shading regions where RPM is nonzero.
 
 Please refer to the comments in the code for more specific details on the functioning and usage of each method.
-
-## License
-
-This project is open-source and available to anyone interested in satellite telemetry analysis. Feel free to use and modify it as needed.
