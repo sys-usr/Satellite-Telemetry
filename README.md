@@ -19,7 +19,9 @@ The Satellite Telemetry Analyzer is a Python application designed to process, vi
    - [Spinning Classification](#spinning-classification)
    - [ROC Curve Plotting](#roc-curve-plotting)
    - [Scaled Data Visualization](#scaled-data-visualization)
-
+4. [Background](#background)
+   - [Important definitions](#important-definitions)
+   
 ## Requirements
 
 The following Python libraries are required to run the code:
