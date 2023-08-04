@@ -25,6 +25,7 @@ The Satellite Telemetry Analyzer is a Python application designed to process, vi
       - [Bus](#bus)
       - [Reaction Wheel](#reaction-wheel)
    - [Implications](#implications)
+   - [The Data](#the-data)
 5. [Hypothesis](#hypothesis)
    - [Null Hypothesis](#null-hypothesis)
    - [Alternate Hypothesis](#alternate-hypothesis)
@@ -32,7 +33,7 @@ The Satellite Telemetry Analyzer is a Python application designed to process, vi
 7. [Visualizations](#visualizations)
 8. [Conclusion](#conclusion)
    - [What this means for telemetry analysis](#what-this-means-for-telemetry-analysis)
-   
+
 
 
 ## Requirements
@@ -120,3 +121,77 @@ The `plot_roc_curve` function calculates and plots the Receiver Operating Charac
 The `visualize_scaled_data` function scales numeric columns and plots a time series, along with shading regions where RPM is nonzero.
 
 Please refer to the comments in the code for more specific details on the functioning and usage of each method.
+
+## Background
+
+### Important Defiinitions 
+   1. Telemetry
+      - Telemetry refers to the automated collection of data from remote locations, such as satellites, and its transmission to receiving equipment for monitoring. In the context of satellites, telemetry data includes information on the satellite's location, temperature, altitude, battery status, and other critical parameters.
+   2. Satellite Bus
+      - A satellite bus, also referred to as a spacecraft bus, is a general model or platform that functions as the support infrastructure for a satellite. It provides the necessary subsystems and structure to support and interface with the payload, which is the mission-specific part of the satellite.
+   3. Reaction Wheel
+      - A reaction wheel is a type of device used in satellites to control their orientation without using thrusters or any consumable resources. It's a part of the satellite's attitude control system.
+         - The reaction wheel is essentially a flywheel, which is a heavy wheel that spins around a central axis. By adjusting the speed at which the wheel spins, you can change the angular momentum of the entire satellite.
+   ### Implications
+   
+   By creating models that can accurately predict missing data from telemetry signals we can gain insight into what the satellite was doing when it was not on cover by a groundstation. Satellite Telemetry signals are designed to not be as accurate and favors sending mass amounts of data rather than precise data so models like the one seen here can also help filter out bad data in the telemetry signal.
+
+   Additionally, satellite telemetry in recent years is more and more likely to be encrypted. By utilizing models like these we can make better infromed inferences on what a satellite is doing based off of what measurements we can take of the satellite. 
+      
+   - During the launch telemetry is usually sent in the clear where we can take measurements and charactarize the signals and build predictive models. Later when the signals become encrypted we can then cross-reference the predicitve models and other measurements of the satellie with the encrypted signal to aid in breaking out the telemetry.
+### The Data
+   The dataset that I used was gathered over ten years by the University of Colorado Boulders Laboratory for Atmospheric and Space Physics (LASP). 
+   The data came from an unnamed satellite with a telemetry beacon emitting data at regular intervals. This dataset focused specifically on 5 measurements. `Battery Temperature`, `Bus Current`, `Bus Voltage`, `Reaction Wheel Rotations Per Minute`, and `Reaction Wheel Temperature`.
+
+   For the purposes of this project I completed a supervised machine learning model with Reaction Wheel RPM as the target and the other data points as features to measure if the features worked as indicators that the Reaction Wheel was spinning.
+
+## Hypothesis
+### Null Hypothesis
+   - Battery Temperature, Bus Voltage, Bus Current, and Reaction Wheel Temperature are not good indicators of the Reaction Wheel spinning.
+### Alternate Hypothesis
+   - Battery Temperature, Bus Voltage, Bus Current, and Reaction Wheel Temperature are good indicators of the Reaction Wheel Spinning
+
+## Data Cleaning
+The data was presented as 5 separate CSV files and their descriptions are as follows:
+
+   - Battery Temperature:
+      - cadence: 1 hour
+      - time_range: 2008-05-30T00:05:00 through 2018-10-02T18:30:00
+      - number_of_samples: 128,288
+      - independent_variable: time (YYYY-MM-DD HH:MM:SS)
+      - dependent_variable: temperature (C)
+   - Bus Voltage:
+      - cadence: 3 hours
+      - time_range: 2001-01-21T21:00:00 through 2018-10-02T18:00:00
+      - number_of_samples: 51,704
+      - independent_variable: time (YYYY-MM-DD HH:MM:SS)
+      - dependent_variable: voltage
+   - Bus Current:
+      - cadence: 24 hours
+      - time_range: 2004-02-14T00:00:00 through 2018-10-02T00:00:00
+      - number_of_samples: 5,345
+      - independent_variable: time (YYYY-MM-DD HH:MM:SS)
+      - dependent_variable: current (A)
+   - Reaction Wheel Temperature:
+      - cadence: 10 minutes
+      - time_range: 2004-02-13T13:10:00 through 2018-10-02T23:50:00
+      - number_of_samples: 769,745
+      - independent_variable: time (YYYY-MM-DD HH:MM:SS)
+      - dependent_variable: temperature (C)
+   - Reaction Wheel RPM(target variable):
+      - cadence: 5 minutes
+      - time_range: 2009-05-22T22:35:00 through 2018-10-02T18:25:00
+      - number_of_samples: 984,911
+      - independent_variable: time (YYYY-MM-DD HH:MM:SS)
+      - dependent_variable: RPM
+
+Beacuse of the variance in range in which the data was collected I decided to only analyze the data from 2010 and onwards. The cadence in which values were collected did not prove to impact the analysis negatively and were therefore not handled.
+
+The RPM category did contain nan values which was interpreted to mean that the wheel was not spinning and was treated as a zero.
+
+As telemetry data prioritizes connection stability over measurement accuracy there were a few bad values in the data such as negative values or extreme outliers. I cut out any rows with negative values and I removed outliers with a z-score of over 2 and under -2. This cutoff was deemed appropriate after testing multiple thresholds and setting it to 2 provided the best results for removing outliers and not impacting real data points.
+   - In this context outliers represented corrupted data rather than data that was real and just outside of the normal threshold 
+
+   ## Visualizations
+
+   
