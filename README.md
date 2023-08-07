@@ -201,6 +201,8 @@ As telemetry data prioritizes connection stability over measurement accuracy the
    ![Bus Voltage](image-2.png)
 ### Reaction Wheel Temperature
    ![Reaction Wheel Temperature](image-3.png)
+### ROC Curve
+   ![ROC Curve](image-4.png)
 
    ## Conclusion
 
