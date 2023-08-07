@@ -220,7 +220,7 @@ After careful examination and modeling of the satellite telemetry data from the 
 
 1. **Significance of Reaction Wheel RPM**: The reaction wheel's RPM, being the focal point of this study, was successfully used as a target variable for our machine learning model. By predicting its activity, it is possible to determine vital aspects of satellite orientation control.
 
-2. **Features as Indicators**: Battery Temperature, Bus Voltage, Bus Current, and Reaction Wheel Temperature were rigorously tested as predictors. Our initial hypothesis was evaluated against the dataset, and it was found that these telemetry features indeed served as good indicators of whether the Reaction Wheel was in operation.
+2. **Features as Indicators**: Battery Temperature, Bus Voltage, Bus Current, and Reaction Wheel Temperature were rigorously tested as predictors. Our initial hypothesis was evaluated against the dataset, and it was found that these telemetry features served as good indicators of whether the Reaction Wheel was in operation. Therefore, I was able to reject the null hypothesis and adopt the alternative.
 
 3. **Dealing with Imperfections**: The data was not without its challenges. Incomplete or missing readings, potential anomalies, and differing cadences across measurements required meticulous data cleaning and preprocessing. However, this process further highlighted the importance of refining raw telemetry data to extract meaningful and actionable insights.
 
