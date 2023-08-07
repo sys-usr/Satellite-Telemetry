@@ -61,13 +61,13 @@ pip install pandas seaborn matplotlib numpy scikit-learn scipy statsmodels plotl
 To run the code, you can utilize the command line arguments to specify which functions you want to execute. Here's an example of running the complete analysis:
 
 ```bash
-python yourscriptname.py --run_all
+python SatelliteTelemetryAnalyzer.py --run_all
 ```
 
 You can also select specific functionalities:
 
 ```bash
-python yourscriptname.py --load_data --preprocess_data --visualize_data
+python SatelliteTelemetryAnalyzer.py --load_data --preprocess_data --visualize_data
 ```
 
 ## Functionality
@@ -193,5 +193,29 @@ As telemetry data prioritizes connection stability over measurement accuracy the
    - In this context outliers represented corrupted data rather than data that was real and just outside of the normal threshold 
 
    ## Visualizations
+### Battery Temperature over time
+   ![Battery Temperature](image.png)
+### Bus Current over time
+   ![Bus Current](image-1.png)
+### Bus Voltage over time
+   ![Bus Voltage](image-2.png)
+### Reaction Wheel Temperature
+   ![Reaction Wheel Temperature](image-3.png)
 
-   
+   ## Conclusion
+
+### What this means for telemetry analysis
+
+After careful examination and modeling of the satellite telemetry data from the University of Colorado Boulder's Laboratory for Atmospheric and Space Physics (LASP), several valuable insights were gathered. Notably, the correlations between certain telemetry parameters and the operation of the satellite's reaction wheel were uncovered.
+
+1. **Significance of Reaction Wheel RPM**: The reaction wheel's RPM, being the focal point of this study, was successfully used as a target variable for our machine learning model. By predicting its activity, it is possible to determine vital aspects of satellite orientation control.
+
+2. **Features as Indicators**: Battery Temperature, Bus Voltage, Bus Current, and Reaction Wheel Temperature were rigorously tested as predictors. Our initial hypothesis was evaluated against the dataset, and it was found that these telemetry features indeed served as good indicators of whether the Reaction Wheel was in operation.
+
+3. **Dealing with Imperfections**: The data was not without its challenges. Incomplete or missing readings, potential anomalies, and differing cadences across measurements required meticulous data cleaning and preprocessing. However, this process further highlighted the importance of refining raw telemetry data to extract meaningful and actionable insights.
+
+4. **Implications of Visualizations**: The presented visualizations serve as an excellent tool for understanding the behavior of individual telemetry parameters over time. Such graphical representations enable domain experts, engineers, and data scientists to visually detect patterns, anomalies, or any correlations between different parameters.
+
+5. **Value of Predictive Models in Satellite Telemetry**: The successful modeling of the telemetry data underscores the value of predictive analytics in the field of satellite operations. While telemetry data might be prone to inaccuracies or encryption, predictive models like the one developed here offer a way to both improve the quality of the data interpretation and potentially infer the behavior of encrypted signals.
+
+In summary, the Satellite Telemetry Analyzer stands as a testament to the convergence of space science and data analytics. By leveraging the power of data science, it is possible to improve our understanding and management of complex satellite systems. Future work could extend this analysis to other telemetry parameters, refine the modeling approach, or adapt the methods to accommodate different satellite architectures or mission profiles.
