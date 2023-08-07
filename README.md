@@ -203,8 +203,16 @@ As telemetry data prioritizes connection stability over measurement accuracy the
    ![Reaction Wheel Temperature](image-3.png)
 ### ROC Curve
    ![ROC Curve](image-4.png)
+### Confusion Matrix
+   ![Confusion Matrix](image-5.png)
+### Correlation Matrix
+   ![Correlation Matrix](image-6.png)
 
    ## Conclusion
+
+The Variance Inflation Factor showed that the Reaction Wheel Temperature and Current Bus Total, 3.6 and 4.2 respectively were the greatest indicators of factors in being able to determine whether or not the Reaction Wheel was spinning.
+
+The Logistic Regression model produced an accurate result 85% percent of the time.
 
 ### What this means for telemetry analysis
 
