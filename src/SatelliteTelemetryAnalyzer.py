@@ -14,6 +14,9 @@ from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.tools.tools import add_constant
 import plotly.express as px
 import argparse
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.callbacks import EarlyStopping
 
 class SatelliteTelemetryAnalyzer:
     def __init__(self):
@@ -132,6 +135,20 @@ class SatelliteTelemetryAnalyzer:
         plt.title('Receiver Operating Characteristic (ROC)')
         plt.legend(loc='lower right')
         plt.show()
+
+    def t_test_battery_temp_spinning_vs_not(self):
+        spinning_data = self.merged_df[self.merged_df['is_spinning'] == 1]['temperature']
+        not_spinning_data = self.merged_df[self.merged_df['is_spinning'] == 0]['temperature']
+    
+        t_stat, p_value = stats.ttest_ind(spinning_data, not_spinning_data)
+    
+        print("T-statistic:", t_stat)
+        print("P-value:", p_value)
+    
+        if p_value < 0.05:
+            print("There is a significant difference in battery temperatures between spinning and non-spinning conditions.")
+        else:
+            print("There is no significant difference in battery temperatures between spinning and non-spinning conditions.")
 
     def visualize_scaled_data(self):
         # Scale numeric columns and plot time series
