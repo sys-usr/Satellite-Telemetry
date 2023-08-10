@@ -74,7 +74,7 @@ class SatelliteTelemetryAnalyzer:
 
     def fit_model(self):
         # Define features and target, split the data, and fit a Ridge regressor
-        X = self.merged_df[['voltage', 'current', 'rpm', 'temperature_wheel_temp', 'current_total_bus_current']]
+        X = self.merged_df[['voltage', 'current', 'rpm', 'temperature_wheel_temp', 'current']]
         y = self.merged_df['temperature']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         ridge_regressor = Ridge(alpha=1.0)
@@ -98,7 +98,7 @@ class SatelliteTelemetryAnalyzer:
 
     def analyze_vif(self):
         # Compute VIF for each feature
-        X = add_constant(self.merged_df[['temperature', 'voltage', 'current', 'rpm', 'temperature_wheel_temp', 'current_total_bus_current']])
+        X = add_constant(self.merged_df[['temperature', 'voltage', 'current', 'rpm', 'temperature_wheel_temp', 'current']])
         vif = pd.DataFrame()
         vif['Feature'] = X.columns
         vif['VIF'] = [variance_inflation_factor(X.values, i) for i in range(X.shape[1])]
@@ -107,7 +107,7 @@ class SatelliteTelemetryAnalyzer:
     def classify_spinning(self):
         # Transform rpm into binary outcome, train logistic regression model, and evaluate accuracy
         self.merged_df['is_spinning'] = (self.merged_df['rpm'] > 0).astype(int)
-        X = self.merged_df[['temperature', 'voltage', 'current', 'temperature_wheel_temp', 'current_total_bus_current']]
+        X = self.merged_df[['temperature', 'voltage', 'current', 'temperature_wheel_temp', 'current']]
         y = self.merged_df['is_spinning']
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         logistic_regressor = LogisticRegression()
@@ -118,7 +118,7 @@ class SatelliteTelemetryAnalyzer:
 
     def plot_roc_curve(self):
         # Define features and target for the ROC curve calculation
-        X = self.merged_df[['voltage', 'current', 'rpm', 'temperature_wheel_temp', 'current_total_bus_current']]
+        X = self.merged_df[['voltage', 'current', 'rpm', 'temperature_wheel_temp']]
         y = self.merged_df['is_spinning']
 
         # Calculate and plot the ROC curve
@@ -136,9 +136,12 @@ class SatelliteTelemetryAnalyzer:
         plt.legend(loc='lower right')
         plt.show()
 
-    def t_test_battery_temp_spinning_vs_not(self):
-        spinning_data = self.merged_df[self.merged_df['is_spinning'] == 1]['temperature']
-        not_spinning_data = self.merged_df[self.merged_df['is_spinning'] == 0]['temperature']
+    def t_test_bus_current_spinning_vs_not(self):
+        #Runs T-test on bbus current whether the wheel is spinning or not
+        #current was chosen because the VIF indicated that bus current total had the greatest affect on whether the wheel was spinning or not
+
+        spinning_data = self.merged_df[self.merged_df['is_spinning'] == 1]['current']
+        not_spinning_data = self.merged_df[self.merged_df['is_spinning'] == 0]['current']
     
         t_stat, p_value = stats.ttest_ind(spinning_data, not_spinning_data)
     
@@ -146,9 +149,9 @@ class SatelliteTelemetryAnalyzer:
         print("P-value:", p_value)
     
         if p_value < 0.05:
-            print("There is a significant difference in battery temperatures between spinning and non-spinning conditions.")
+            print("There is a significant difference in bus current between spinning and non-spinning conditions.")
         else:
-            print("There is no significant difference in battery temperatures between spinning and non-spinning conditions.")
+            print("There is no significant difference in bus current between spinning and non-spinning conditions.")
 
     def visualize_scaled_data(self):
         # Scale numeric columns and plot time series
@@ -212,6 +215,7 @@ if __name__ == '__main__':
         analyzer.classify_spinning()
         analyzer.plot_roc_curve()
         analyzer.visualize_scaled_data()
+        analyzer.t_test_bus_current_spinning_vs_not()
 
     if args.run_all:
         run_all_functions()

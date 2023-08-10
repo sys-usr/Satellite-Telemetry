@@ -194,19 +194,19 @@ As telemetry data prioritizes connection stability over measurement accuracy the
 
    ## Visualizations
 ### Battery Temperature over time
-   ![Battery Temperature](image.png)
+  ![ !\[Battery Temperature\](image.png)](img/Battery_Temperature.png)
 ### Bus Current over time
-   ![Bus Current](image-1.png)
+ ![  !\[Bus Current\](image-1.png)](img/Bus_Current.png)
 ### Bus Voltage over time
-   ![Bus Voltage](image-2.png)
+![   !\[Bus Voltage\](image-2.png)](img/Bus_Voltage.png)
 ### Reaction Wheel Temperature
-   ![Reaction Wheel Temperature](image-3.png)
+![   !\[Reaction Wheel Temperature\](image-3.png)](img/Reaction_Wheel_Temperature.png)
 ### ROC Curve
-   ![ROC Curve](image-4.png)
+![   !\[ROC Curve\](image-4.png)](img/ROC_curve.png)
 ### Confusion Matrix
-   ![Confusion Matrix](image-5.png)
+![   !\[Confusion Matrix\](image-5.png)](img/confusion_matrix.png)
 ### Correlation Matrix
-   ![Correlation Matrix](image-6.png)
+![   !\[Correlation Matrix\](image-6.png)](img/correlation_heatmap.png)
 
    ## Conclusion
 
